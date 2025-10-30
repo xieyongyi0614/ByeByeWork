@@ -10,6 +10,11 @@
     "baseUrl": ".",
     "outDir": "dist",
     "moduleResolution": "node",
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+    "paths": {
+      "@repo/electron-ipc": ["../../../packages/electron-ipc/src/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

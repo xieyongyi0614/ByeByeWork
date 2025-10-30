@@ -10,6 +10,7 @@ const CountDown = () => {
   const clockRefs = useRef<Array<React.RefObject<ClockCardRef | null>>>(
     Array.from({ length: 6 }, () => React.createRef<ClockCardRef>())
   )
+  const clockContainerRef = useRef<HTMLDivElement>(null)
 
   const timeDigits = useMemo(() => {
     const currentTime = dayjs(nowTime).format('HHmmss').split('')
@@ -42,32 +43,31 @@ const CountDown = () => {
     })
   }, [timeDigits])
 
-  const handleDragStart = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const { x, y } = e.currentTarget.getBoundingClientRect()
-    const offsetX = e.clientX - x
-    const offsetY = e.clientY - y
-
-    const dragMove = (e: MouseEvent) => {
-      // 通过Electron API移动窗口，而不是使用 window.moveTo
-      if (window.electronAPI?.moveWindow) {
-        window.electronAPI.moveWindow(e.screenX - offsetX, e.screenY - offsetY)
-      } else {
-        // 降级处理：在非Electron环境中使用原生API
-        console.warn('electronAPI not available, using fallback')
-      }
-    }
-
-    const dragEnd = () => {
-      window.removeEventListener('mousemove', dragMove)
-      window.removeEventListener('mouseup', dragEnd)
-    }
-
-    window.addEventListener('mousemove', dragMove)
-    window.addEventListener('mouseup', dragEnd)
+  const handleMouseUp = useCallback(() => {
+    window.electronAPI?.publishMainWindowOperateMessage({
+      event: 'homeDragWindowEnd',
+    })
   }, [])
-
+  const handleMouseDown = useCallback(() => {
+    window.electronAPI?.publishMainWindowOperateMessage({
+      event: 'homeDragWindowStart',
+    })
+    document.onmouseup = function () {
+      document.onmousemove = null
+      document.onmouseup = null
+      document.onselectstart = null
+      window.electronAPI?.publishMainWindowOperateMessage({
+        event: 'homeDragWindowEnd',
+      })
+    }
+  }, [])
   return (
-    <div className={styles.container} onMouseDown={handleDragStart}>
+    <div
+      ref={clockContainerRef}
+      className={styles.container}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+    >
       {clockRefs.current.map((ref, index) => (
         <ClockCard key={index} ref={ref} />
       ))}

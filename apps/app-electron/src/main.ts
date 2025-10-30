@@ -2,6 +2,8 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'node:path'
 import started from 'electron-squirrel-startup'
 import dotenv from 'dotenv'
+import { CustomWindowMove } from '@repo/electron-ipc'
+
 dotenv.config()
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -13,6 +15,7 @@ if (started) {
 ipcMain.handle('move-window', (event, x: number, y: number) => {
   const win = BrowserWindow.fromWebContents(event.sender)
   if (win) {
+    console.log('move-window', x, y)
     win.setPosition(x, y)
   }
 })
@@ -32,6 +35,8 @@ const createWindow = () => {
     transparent: true,
     alwaysOnTop: true,
   })
+
+  CustomWindowMove.init(mainWindow)
 
   if (process.env.MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(process.env.MAIN_WINDOW_VITE_DEV_SERVER_URL)
