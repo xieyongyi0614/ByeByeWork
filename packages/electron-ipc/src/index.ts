@@ -1,11 +1,11 @@
-import { ipcMain } from 'electron'
-import { AzCustomWindowMove } from './utils/wIndowMove'
+import { ipcMain } from 'electron';
+import { AzCustomWindowMove } from './utils/wIndowMove';
 
-const CustomWindowMove = new AzCustomWindowMove()
+const CustomWindowMove = new AzCustomWindowMove();
 
 // 窗口操作处理器
 ipcMain.on('Main_Window_Operate', (event, info) => {
-  const operateEvent = info.event || ''
+  const operateEvent = info.event || '';
   switch (operateEvent) {
     case 'homeDragWindowStart':
       {
@@ -16,18 +16,18 @@ ipcMain.on('Main_Window_Operate', (event, info) => {
             CustomWindowMove.init(win);
             CustomWindowMove.start();
         */
-        CustomWindowMove.start()
+        CustomWindowMove.start();
       }
-      break
+      break;
     case 'homeDragWindowEnd':
       {
-        CustomWindowMove.end()
+        CustomWindowMove.end();
       }
-      break
+      break;
 
     default:
-      break
+      break;
   }
-})
+});
 
-export { CustomWindowMove }
+export { CustomWindowMove };
