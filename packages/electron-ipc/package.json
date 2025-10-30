@@ -12,7 +12,9 @@
     }
   },
   "scripts": {
-    "dev": "tsc -w"
+    "build": "tsc",
+    "dev": "tsc -w",
+    "clean": "rm -rf dist"
   },
   "keywords": [],
   "author": "",
