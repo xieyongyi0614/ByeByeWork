@@ -1,11 +1,11 @@
-import './App.css'
-import CountDown from './pages/count-down'
+import './App.css';
+import CountDown from './pages/count-down';
 function App() {
   return (
     <>
       <CountDown></CountDown>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

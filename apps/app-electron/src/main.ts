@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import { createClockWindow } from './main/createClockWindow';
 
 dotenv.config();
-const a = 1;
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
   app.quit();

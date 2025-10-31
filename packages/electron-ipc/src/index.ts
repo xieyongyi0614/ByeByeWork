@@ -1,5 +1,5 @@
 import { ipcMain } from 'electron';
-import { AzCustomWindowMove } from './utils/wIndowMove';
+import { AzCustomWindowMove } from './utils/windowMove';
 
 const CustomWindowMove = new AzCustomWindowMove();
 

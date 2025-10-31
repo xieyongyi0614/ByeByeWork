@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo, memo } from 'react';
 import { useNowTime } from '@/hooks/useNowTime';
 import dayjs from 'dayjs';
 import ClockCard, { type ClockCardRef } from './widgets/RotateCard';
@@ -18,7 +18,7 @@ const CountDown = () => {
       .format('HHmmss')
       .split('');
     return { current: currentTime, next: nextTime };
-  }, []);
+  }, [nowTime]);
 
   useEffect(() => {
     const { current, next } = timeDigits;
@@ -74,4 +74,4 @@ const CountDown = () => {
     </div>
   );
 };
-export default CountDown;
+export default memo(CountDown);
