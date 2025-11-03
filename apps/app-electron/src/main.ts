@@ -2,6 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import started from 'electron-squirrel-startup';
 import dotenv from 'dotenv';
 import { createClockWindow } from './main/createClockWindow';
+import { createSettingWindow } from './main/createSettingWindow';
 
 dotenv.config();
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -14,6 +15,7 @@ if (started) {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   createClockWindow();
+  createSettingWindow();
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

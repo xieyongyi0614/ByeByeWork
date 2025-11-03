@@ -13,12 +13,12 @@
 }
 
 .card-size {
-  width: 50px;
-  height: 80px;
+  width: var(--clock-width, 50px);
+  height: var(--clock-height, 80px);
 }
 .rotate-card {
   @extend .card-size;
-  perspective: 400px;
+  perspective: calc(var(--clock-width) * 6);
 
   &.down {
     .back {
@@ -35,9 +35,9 @@
     &::before,
     &::after {
       display: block;
-      width: 50px;
-      height: 40px;
-      font: bold 80px '黑体';
+      width: var(--clock-width);
+      height: calc(var(--clock-height) / 2);
+      font: bold var(--clock-width) '黑体';
       color: white;
       text-align: center;
       overflow: hidden;
@@ -46,20 +46,20 @@
     &::after {
       content: var(--prev-content, '0');
       line-height: 0;
-      border-radius: 8px;
+      border-radius: calc(8 / 50 * var(--clock-width));
     }
     &::before {
       content: var(--next-content, '1');
-      line-height: 80px;
-      border-radius: 8px;
+      line-height: var(--clock-height);
+      border-radius: calc(8 / 50 * var(--clock-width));
     }
     &.back {
-      height: 40px;
+      height: calc(var(--clock-height) / 2);
       transform-origin: bottom;
       transition: 1s all;
 
       &::after {
-        line-height: 80px;
+        line-height: var(--clock-height);
         transform: translateY(-100%);
       }
       &::before {

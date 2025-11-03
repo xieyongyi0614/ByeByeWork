@@ -26,6 +26,7 @@ export default defineConfig([
       semi: 'warn',
       'react-hooks/exhaustive-deps': 'warn',
       'react-hooks/rules-of-hooks': 'error',
+      'react/display-name': 'off',
     },
   },
 ]);

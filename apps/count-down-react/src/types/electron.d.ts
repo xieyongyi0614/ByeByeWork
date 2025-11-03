@@ -2,10 +2,11 @@
 declare global {
   interface Window {
     electronAPI?: {
-      moveWindow: (x: number, y: number) => Promise<void>
-      publishMainWindowOperateMessage: (info: { event: string }) => void
-    }
+      publishMainWindowOperateMessage: (info: { event: string }) => void;
+      getWindowSize: () => Promise<{ width: number; height: number }>;
+      resizeWindow: (info: { width: number; height: number }) => void;
+    };
   }
 }
 
-export {}
+export {};

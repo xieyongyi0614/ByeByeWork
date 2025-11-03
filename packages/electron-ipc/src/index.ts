@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron';
+import { BrowserWindow, ipcMain } from 'electron';
 import { AzCustomWindowMove } from './utils/windowMove';
 
 const CustomWindowMove = new AzCustomWindowMove();
@@ -28,6 +28,23 @@ ipcMain.on('Main_Window_Operate', (event, info) => {
     default:
       break;
   }
+});
+ipcMain.handle('get-window-size', (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (!win) {
+    return;
+  }
+  const [currentWidth, currentHeight] = win.getSize();
+  return { width: currentWidth, height: currentHeight };
+});
+
+ipcMain.on('resize-window', (event, info) => {
+  const { width, height } = info;
+  const win = BrowserWindow.fromWebContents(event.sender);
+  if (!win) {
+    return;
+  }
+  win.setBounds({ x: win.getBounds().x, y: win.getBounds().y, width, height });
 });
 
 export { CustomWindowMove };
