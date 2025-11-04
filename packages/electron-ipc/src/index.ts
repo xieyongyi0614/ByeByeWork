@@ -1,5 +1,6 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import { AzCustomWindowMove } from './utils/windowMove';
+import './widgets/setSetting';
 
 const CustomWindowMove = new AzCustomWindowMove();
 
@@ -48,3 +49,4 @@ ipcMain.on('resize-window', (event, info) => {
 });
 
 export { CustomWindowMove };
+export { registerWindow, getWindow } from './utils/windowRegistry';

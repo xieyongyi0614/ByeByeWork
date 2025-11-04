@@ -10,6 +10,23 @@
   display: flex;
   justify-content: center;
   cursor: pointer;
+  position: relative;
+  .byeWord-start {
+    color: #fff;
+    position: absolute;
+    left: 10px;
+    top: 0;
+    z-index: 10;
+    // font: bold calc(var(--clock-width) / 2) '黑体';
+  }
+  .byeWord-end {
+    color: #fff;
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+    z-index: 10;
+    // font: bold calc(var(--clock-width) / 2) '黑体';
+  }
 }
 
 .card-size {

@@ -11,9 +11,9 @@ export const createSettingWindow = () => {
   if (app.isPackaged) {
     const distPath = path.join(__dirname, '../renderer/index.html?windowType=setting');
     settingWindow.loadFile(distPath);
-    return;
+  } else {
+    settingWindow.loadURL('http://localhost:2999?windowType=setting');
+    settingWindow.webContents.openDevTools();
   }
-
-  settingWindow.loadURL(process.env.MAIN_WINDOW_VITE_DEV_SERVER_URL ?? 'http://localhost:2999');
-  settingWindow.webContents.openDevTools();
+  return settingWindow;
 };

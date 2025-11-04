@@ -13,12 +13,13 @@ export interface ClockCardRef {
 export interface ClockCardProps {
   width?: number;
   height?: number;
+  defaultData?: Partial<PropsWithCardData>;
 }
 const ClockCard = forwardRef<ClockCardRef, ClockCardProps>((props, ref) => {
-  const { width = 50, height = 80 } = props;
+  const { width = 50, height = 80, defaultData = { prev: '0', next: '1' } } = props;
   const [data, setData] = useState({
-    prev: '0',
-    next: '1',
+    prev: defaultData.prev,
+    next: defaultData.next,
     working: false,
   });
   const rotateCardStyle = useMemo(() => {

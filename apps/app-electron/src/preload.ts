@@ -11,6 +11,15 @@ const electronAPI = {
   resizeWindow: (info: { width: number; height: number }) => {
     ipcRenderer.send('resize-window', info);
   },
+  setSetting: (setting: { byeWordTime: string | null }) => {
+    ipcRenderer.send('set-setting', { setting });
+  },
+  onSettingUpdated: (callback: (setting: { byeWordTime: string | null }) => void) => {
+    ipcRenderer.on('setting-updated', (_, setting) => callback(setting));
+  },
+  removeSettingUpdatedListener: () => {
+    ipcRenderer.removeAllListeners('setting-updated');
+  },
 };
 
 // 将 electronAPI 暴露给渲染进程

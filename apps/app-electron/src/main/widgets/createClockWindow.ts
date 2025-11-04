@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'node:path';
-import { CustomWindowMove } from '@repo/electron-ipc';
+import { CustomWindowMove, registerWindow } from '@repo/electron-ipc';
 
 export const createClockWindow = () => {
   const clockWindow = new BrowserWindow({
@@ -16,14 +16,17 @@ export const createClockWindow = () => {
     alwaysOnTop: true,
   });
 
+  // 注册窗口到窗口注册表
+  registerWindow('clock', clockWindow);
+
   CustomWindowMove.init(clockWindow);
 
   if (app.isPackaged) {
     const distPath = path.join(__dirname, '../renderer/index.html?windowType=clock');
     clockWindow.loadFile(distPath);
-    return;
+  } else {
+    clockWindow.loadURL('http://localhost:2999?windowType=clock');
+    clockWindow.webContents.openDevTools();
   }
-
-  clockWindow.loadURL(process.env.MAIN_WINDOW_VITE_DEV_SERVER_URL ?? 'http://localhost:2999');
-  clockWindow.webContents.openDevTools();
+  return clockWindow;
 };
