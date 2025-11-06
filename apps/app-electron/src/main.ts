@@ -1,7 +1,8 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu, nativeImage, Tray } from 'electron';
 import started from 'electron-squirrel-startup';
 import dotenv from 'dotenv';
 import { MainWindows } from './main/mainWindows';
+import path from 'node:path';
 
 dotenv.config();
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -15,6 +16,39 @@ if (started) {
 app.on('ready', () => {
   const mainWindows = new MainWindows();
   mainWindows.init();
+
+  // 根据开发/生产环境获取正确的资源路径
+  let trayIconPath: string;
+  if (app.isPackaged) {
+    // 生产环境：资源在 extraResources 中（通过 process.resourcesPath 访问）
+    trayIconPath = path.join(process.resourcesPath, 'assets', 'tray-icon.jpg');
+  } else {
+    trayIconPath = path.join(__dirname, '..', '..', 'src', 'assets', 'tray-icon.jpg');
+  }
+
+  const tray = new Tray(nativeImage.createFromPath(trayIconPath));
+
+  tray.on('click', () => {
+    if (mainWindows.getSettingWindow()?.isVisible()) {
+      mainWindows.getSettingWindow()?.hide();
+    } else {
+      mainWindows.getSettingWindow()?.show();
+    }
+  });
+
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: '退出',
+      click: () => {
+        if (mainWindows.getSettingWindow()) {
+          mainWindows.getSettingWindow()?.destroy();
+        }
+        app.quit();
+      },
+    },
+  ]);
+  tray.setToolTip('ByeByeWork');
+  tray.setContextMenu(contextMenu);
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

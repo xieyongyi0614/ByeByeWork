@@ -155,11 +155,12 @@ const CountDown = () => {
         } as React.CSSProperties
       }
     >
-      <div className={styles['byeWord-start']}>你还有</div>
+      {setting?.byeWordTime && <div className={styles['byeWord-start']}>你还有</div>}
+
       {clockRefs.current.map((ref, index) => (
         <ClockCard key={index} ref={ref} {...clockCardSize} />
       ))}
-      <div className={styles['byeWord-end']}>下班</div>
+      {setting?.byeWordTime && <div className={styles['byeWord-end']}>下班</div>}
     </div>
   );
 };

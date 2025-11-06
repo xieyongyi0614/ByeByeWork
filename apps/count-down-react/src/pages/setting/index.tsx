@@ -1,13 +1,16 @@
+import { useTitle } from 'ahooks';
 import type { FormProps } from 'antd';
-import { Button, Form, TimePicker } from 'antd';
+import { Button, Card, Form, TimePicker } from 'antd';
 import dayjs from 'dayjs';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 
 interface SettingFormFields {
   byeWordTime: number;
 }
 
 const Setting = () => {
+  useTitle('ByeByeWork - 设置');
+
   const onFinish = useCallback<NonNullable<FormProps<SettingFormFields>['onFinish']>>((values) => {
     console.log('Success:', values);
     const { byeWordTime } = values;
@@ -22,8 +25,9 @@ const Setting = () => {
     },
     [],
   );
+  useEffect(() => {}, []);
   return (
-    <div>
+    <Card variant="borderless" style={{}}>
       <Form
         name="basic"
         labelCol={{ span: 8 }}
@@ -35,20 +39,20 @@ const Setting = () => {
         autoComplete="off"
       >
         <Form.Item<SettingFormFields>
-          label="Bye Word Time"
+          label="下班时间"
           name="byeWordTime"
-          rules={[{ required: true, message: 'Please input bye word time!' }]}
+          rules={[{ required: true, message: '请输入下班时间' }]}
         >
           <TimePicker defaultOpenValue={dayjs('00:00:00', 'HH:mm:ss')} format="HH:mm:ss" />
         </Form.Item>
 
         <Form.Item label={null}>
           <Button type="primary" htmlType="submit">
-            Submit
+            提交
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </Card>
   );
 };
 

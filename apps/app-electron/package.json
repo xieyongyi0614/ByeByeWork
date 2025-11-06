@@ -1,8 +1,8 @@
 {
   "name": "app-electron",
-  "productName": "app-electron",
+  "productName": "ByeByeWork",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "ByeByeWork",
   "main": ".vite/build/main.js",
   "scripts": {
     "dev": "electron-forge start",
